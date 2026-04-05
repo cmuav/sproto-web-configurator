@@ -1,0 +1,37 @@
+{
+  "name": "sproto-web-configurator",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "tsc --noEmit && eslint ."
+  },
+  "dependencies": {
+    "@cmuav/sproto-protocol": "^0.2.0",
+    "@cmuav/web-serial-polyfill": "^1.1.2",
+    "@radix-ui/react-slot": "^1.2.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.475.0",
+    "next": "^15.3.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.3.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.50",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@types/w3c-web-serial": "^1.0.3",
+    "@types/w3c-web-usb": "^1.0.6",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.27.0",
+    "eslint-config-next": "^15.3.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3"
+  }
+}
