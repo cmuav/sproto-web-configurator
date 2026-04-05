@@ -48,16 +48,7 @@ export default function Home() {
           Configure Tribunus ESCs from your browser
         </h2>
         <p className="text-muted-foreground text-base max-w-xl leading-relaxed">
-          Read, edit, and write ESC settings over USB using the{" "}
-          <a
-            href="https://github.com/cmuav/sproto-reverse"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline underline-offset-2 hover:text-foreground transition-colors"
-          >
-            Sproto protocol
-          </a>
-          . No drivers or desktop software required.
+          Read, edit, and write ESC settings over WebUSB. No drivers or desktop software required.
         </p>
       </div>
 
@@ -94,41 +85,9 @@ export default function Home() {
               <Globe className="h-4 w-4 shrink-0 mt-0.5" />
               <span><strong>Chrome or Edge</strong> with WebUSB support (not supported in Firefox or Safari)</span>
             </li>
-            <li className="flex items-start gap-2">
-              <Zap className="h-4 w-4 shrink-0 mt-0.5" />
-              <span><strong>USB-serial adapter</strong> (PL2303 or CDC-ACM) connected to the ESC programming port</span>
-            </li>
           </ul>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="border-t border-border mt-8">
-        <div className="max-w-2xl mx-auto px-4 py-6 flex items-center justify-between text-xs text-muted-foreground">
-          <p>
-            Open source &mdash;{" "}
-            <a
-              href="https://github.com/cmuav/sproto-web-configurator"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline underline-offset-2 hover:text-foreground"
-            >
-              GitHub
-            </a>
-          </p>
-          <p>
-            Protocol:{" "}
-            <a
-              href="https://github.com/cmuav/sproto-reverse"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline underline-offset-2 hover:text-foreground"
-            >
-              @cmuav/sproto-protocol
-            </a>
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

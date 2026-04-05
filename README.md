@@ -1,6 +1,6 @@
 # Sproto Web Configurator
 
-Browser-based configuration tool for Tribunus ESCs (II and III series) using the [Sproto serial protocol](https://github.com/cmuav/sproto-reverse) over WebUSB.
+Browser-based configuration tool for Tribunus ESCs (II and III series) using the [Sproto serial protocol](https://github.com/cmuav/sproto-reverse) over WebUSB. Note: this is not meant for programmign with a Diode cable, only through the USB port.
 
 **[Open the configurator](https://cmuav.github.io/sproto-web-configurator)**
 
@@ -16,7 +16,7 @@ Browser-based configuration tool for Tribunus ESCs (II and III series) using the
 ## Requirements
 
 - **Chrome or Edge** (WebUSB is not supported in Firefox or Safari)
-- A USB-to-serial adapter (PL2303 or CDC-ACM) connected to the ESC programming port
+- A Tribunus II or Tribunus III ESC connected via USB
 
 ## Development
 
