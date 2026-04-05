@@ -7,9 +7,11 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { PropertyDef, TribunusDevice } from "@cmuav/sproto-protocol";
+import type { PropertyDef, TribunusIIDevice } from "@cmuav/sproto-protocol";
 import {
-  TribunusSystemProps, TribunusStateProps, TribunusSettingsProps,
+  TribunusIISystemProps, TribunusIIStateProps, TribunusIISettingsProps,
+  TRIBUNUS_II_SYSTEM_REGION, TRIBUNUS_II_STATE_REGION, TRIBUNUS_II_SETTINGS_REGION,
+  TRIBUNUS_II_SETTINGS_ORDER,
   DeviceModes, BecVoltages, Protocols,
   RotationDirections, PwmModes,
 } from "@cmuav/sproto-protocol";
@@ -145,23 +147,23 @@ export default function TribunusIIPage() {
 
   const [webUsbSupported] = useState(() => typeof window !== "undefined" && "usb" in navigator);
 
-  const tribRef = useRef<TribunusDevice | null>(null);
+  const tribRef = useRef<TribunusIIDevice | null>(null);
   const portRef = useRef<unknown>(null);
   const transportRef = useRef<{ release(): Promise<void> } | null>(null);
 
   const SYSTEM_ENTRIES = useMemo(() =>
-    Object.entries(TribunusSystemProps as unknown as Record<string, PropertyDef>).map(([key, def]) => ({
+    Object.entries(TribunusIISystemProps as unknown as Record<string, PropertyDef>).map(([key, def]) => ({
       key, name: SYSTEM_NAMES[key] ?? key, def,
     })), []);
 
   const STATE_ENTRIES = useMemo(() =>
-    Object.entries(TribunusStateProps as unknown as Record<string, PropertyDef>).map(([key, def]) => ({
+    Object.entries(TribunusIIStateProps as unknown as Record<string, PropertyDef>).map(([key, def]) => ({
       key, name: STATE_NAMES[key] ?? key, def,
     })), []);
 
   const SETTINGS_ENTRIES = useMemo(() => {
-    const allProps = TribunusSettingsProps as unknown as Record<string, PropertyDef>;
-    return Object.keys(allProps).map((key: string) => ({
+    const allProps = TribunusIISettingsProps as unknown as Record<string, PropertyDef>;
+    return (TRIBUNUS_II_SETTINGS_ORDER as string[]).map((key: string) => ({
       key, name: SETTINGS_NAMES[key] ?? key, def: allProps[key],
       options: allProps[key].enumName ? buildEnumOptions(allProps[key].enumName!) : undefined,
     }));
@@ -192,7 +194,7 @@ export default function TribunusIIPage() {
   const connect = useCallback(async () => {
     setError(null); setState("connecting");
     try {
-      const { createTribunusDevice } = await import("@cmuav/sproto-protocol");
+      const { createTribunusIIDevice } = await import("@cmuav/sproto-protocol");
       const { WebSerialSprotoTransport } = await import("@/lib/sproto-transport");
       const { serial } = await import("@cmuav/web-serial-polyfill");
       const port = await serial.requestPort();
@@ -202,7 +204,7 @@ export default function TribunusIIPage() {
       const transport = new WebSerialSprotoTransport(port);
       transportRef.current = transport;
       transport.onDisconnect = () => handleLost();
-      tribRef.current = createTribunusDevice(transport);
+      tribRef.current = createTribunusIIDevice(transport);
       setState("connected");
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);

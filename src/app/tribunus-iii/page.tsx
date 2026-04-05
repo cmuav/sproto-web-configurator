@@ -11,7 +11,8 @@ import type { PropertyDef, TribunusDevice } from "@cmuav/sproto-protocol";
 import {
   TribunusSystemProps, TribunusStateProps, TribunusSettingsProps,
   TRIBUNUS_SYSTEM_REGION, TRIBUNUS_STATE_REGION, TRIBUNUS_SETTINGS_REGION,
-  DeviceModes, Protocols,
+  TRIBUNUS_SETTINGS_ORDER,
+  DeviceModes, ProtocolsIII, VoltageLimitModes, CpuTempLogging,
   RotationDirections, PwmModes, IGainCorrections,
   extractBits,
 } from "@cmuav/sproto-protocol";
@@ -23,10 +24,12 @@ type ConnectionState = "disconnected" | "connecting" | "connected" | "lost";
 const ENUM_LABELS: Record<string, Record<number, string>> = {
   DeviceModes: Object.fromEntries(Object.entries(DeviceModes).map(([k, v]) => [v, k.replace(/_/g, " ")])),
   BecVoltages: { 0: "5.0V", 1: "6.2V", 2: "7.2V", 3: "8.4V", 4: "8.8V", 5: "10.0V", 6: "11.0V", 7: "12.1V", 8: "Disabled" },
-  Protocols: Object.fromEntries(Object.entries(Protocols).map(([k, v]) => [v, k.replace(/_/g, " ")])),
+  Protocols: Object.fromEntries(Object.entries(ProtocolsIII).map(([k, v]) => [v, k.replace(/_/g, " ")])),
   RotationDirections: Object.fromEntries(Object.entries(RotationDirections).map(([k, v]) => [v, k])),
   PwmModes: Object.fromEntries(Object.entries(PwmModes).map(([k, v]) => [v, k.replace(/_/g, " ")])),
   IGainCorrections: Object.fromEntries(Object.entries(IGainCorrections).map(([k, v]) => [v, k])),
+  VoltageLimitModes: Object.fromEntries(Object.entries(VoltageLimitModes).map(([k, v]) => [v, k.replace(/_/g, " ")])),
+  CpuTempLogging: Object.fromEntries(Object.entries(CpuTempLogging).map(([k, v]) => [v, k.replace(/_/g, " ")])),
 };
 
 // ── Value reading/writing ───────────────────────────────────────────────────
@@ -173,10 +176,12 @@ export default function TribunusIIIPage() {
 
   const SETTINGS_ENTRIES = useMemo(() => {
     const allProps = TribunusSettingsProps as unknown as Record<string, PropertyDef>;
-    return Object.keys(allProps).map((key: string) => ({
-      key, name: SETTINGS_NAMES[key] ?? key, def: allProps[key],
-      options: allProps[key].enumName ? buildEnumOptions(allProps[key].enumName!) : undefined,
-    }));
+    return TRIBUNUS_SETTINGS_ORDER
+      .filter((key: string) => key in allProps)
+      .map((key: string) => ({
+        key, name: SETTINGS_NAMES[key] ?? key, def: allProps[key],
+        options: allProps[key].enumName ? buildEnumOptions(allProps[key].enumName!) : undefined,
+      }));
   }, []);
 
   const tribRef = useRef<TribunusDevice | null>(null);

@@ -9,7 +9,7 @@
     "lint": "tsc --noEmit && eslint ."
   },
   "dependencies": {
-    "@cmuav/sproto-protocol": "^0.2.0",
+    "@cmuav/sproto-protocol": "^0.2.1",
     "@cmuav/web-serial-polyfill": "^1.1.2",
     "@radix-ui/react-slot": "^1.2.4",
     "class-variance-authority": "^0.7.1",
